@@ -4,7 +4,6 @@ permissions:
   contents: read
 
 on:
-  push:
   workflow_dispatch:
 
 jobs:
@@ -18,12 +17,12 @@ jobs:
         profile: ["test-direct", "test-no-direct"]
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Java
-      uses: actions/setup-java@v4
-      with:
-        java-version: ${{ matrix.java-version }}
-        distribution: ${{ matrix.distribution }}
-        cache: 'maven'
-    - name: Build with Maven
-      run: mvn -ntp -B -P${{ matrix.profile }} clean test
+      - uses: actions/checkout@v4
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: ${{ matrix.distribution }}
+          cache: 'maven'
+      - name: Build with Maven
+        run: mvn -ntp -B -P${{ matrix.profile }} clean test
